@@ -50,6 +50,8 @@ class Game:
     def how_many_players(self):
         return len(self.players)
 
+# se puede refactorizar el método roll para evitar la duplicación de código 
+# en el caso de estar en penalti o no, y así mejorar la legibilidad del código
     def roll(self, roll):
         print(f"{self.players[self.current_player]} is the current player")
         print(f"They have rolled a {roll}")
@@ -57,26 +59,14 @@ class Game:
         if self.in_penalty_box[self.current_player]:
             if roll % 2 != 0:
                 self.is_getting_out_of_penalty_box = True
-
                 print(f"{self.players[self.current_player]} is getting out of the penalty box")
-                self.places[self.current_player] += roll
-                if self.places[self.current_player] > 12:
-                    self.places[self.current_player] -= 12
-
-                print(f"{self.players[self.current_player]}'s new location is {self.places[self.current_player]}")
-                print(f"The category is {self._current_category()}")
-                self._ask_question()
+                self._move_and_ask(roll)
             else:
                 print(f"{self.players[self.current_player]} is not getting out of the penalty box")
                 self.is_getting_out_of_penalty_box = False
         else:
-            self.places[self.current_player] += roll
-            if self.places[self.current_player] > self.BOARD_SIZE:
-                self.places[self.current_player] -= 12
+            self._move_and_ask(roll)
 
-            print(f"{self.players[self.current_player]}'s new location is {self.places[self.current_player]}")
-            print(f"The category is {self._current_category()}")
-            self._ask_question()
 
     def _ask_question(self):
         category = self._current_category()
@@ -140,4 +130,15 @@ class Game:
         self.current_player += 1
         if self.current_player == len(self.players):
             self.current_player = 0
-        
+
+#   extraemos de roll el código que mueve al jugador y pregunta 
+#   para evitar la duplicación de código en el caso de estar en penalti o no
+    def _move_and_ask(self, roll):
+        self.places[self.current_player] += roll
+        if self.places[self.current_player] > self.BOARD_SIZE:
+            self.places[self.current_player] -= self.BOARD_SIZE
+        print(f"{self.players[self.current_player]}'s new location is "
+            f"{self.places[self.current_player]}")
+        print(f"The category is {self._current_category()}")
+        self._ask_question()
+ 
