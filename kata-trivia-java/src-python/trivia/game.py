@@ -107,15 +107,11 @@ class Game:
                 print(f"{self.players[self.current_player]} now has {self.purses[self.current_player]} Gold Coins.")
 
                 winner = self._did_player_win()
-                self.current_player += 1
-                if self.current_player == len(self.players):
-                    self.current_player = 0
+                self._advance_to_next_player()
 
                 return winner
             else:
-                self.current_player += 1
-                if self.current_player == len(self.players):
-                    self.current_player = 0
+                self._advance_to_next_player()
                 return True
         else:
             print("Answer was corrent!!!!")
@@ -123,9 +119,7 @@ class Game:
             print(f"{self.players[self.current_player]} now has {self.purses[self.current_player]} Gold Coins.")
 
             winner = self._did_player_win()
-            self.current_player += 1
-            if self.current_player == len(self.players):
-                self.current_player = 0
+            self._advance_to_next_player()
 
             return winner
 
@@ -141,3 +135,9 @@ class Game:
 
     def _did_player_win(self):
         return not (self.purses[self.current_player] == self.WINNING_COINS) # añadimos la propiedad WINNING_COINS para evitar el número mágico 6
+    
+    def _advance_to_next_player(self):
+        self.current_player += 1
+        if self.current_player == len(self.players):
+            self.current_player = 0
+        

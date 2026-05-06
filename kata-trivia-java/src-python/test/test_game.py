@@ -2,10 +2,10 @@ import io
 import random
 import sys
 import pytest
-# Yahir Hernández
 from trivia.game_old import GameOld
 from trivia.game import Game
 
+#Andrés Jaime Rodríguez - 2024-06
 
 def extract_output(rand: random.Random, game) -> str:
     old_stdout = sys.stdout

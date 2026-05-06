@@ -1,5 +1,5 @@
 from collections import deque
-# Yahir Hernandez
+# Andrés Jaime Rodríguez - 2024-06
 
 class GameOld:
     def __init__(self):
