@@ -1,13 +1,20 @@
 from collections import deque
-# Yahir Hernandez
+# Andrés Jaime Rodríguez - 2024-06
 
 # REFACTOR ME
 class Game:
+    BOARD_SIZE = 12
+    WINNING_COINS = 6
+    MAX_PLAYERS = 4
+    QUESTION_PER_CATEGORY = 50
+       
     def __init__(self):
+
+        # por qué son 6? y qué significa ganar 6?
         self.players = []
-        self.places = [0] * 6
-        self.purses = [0] * 6
-        self.in_penalty_box = [False] * 6
+        self.places = [0] * self.BOARD_SIZE  # posición del jugador i
+        self.purses = [0] * self.BOARD_SIZE  # monedas del jugador i
+        self.in_penalty_box = [False] * self.BOARD_SIZE  # ¿está en penalti el jugador i?
 
         self.pop_questions = deque()
         self.science_questions = deque()
@@ -17,6 +24,7 @@ class Game:
         self.current_player = 0
         self.is_getting_out_of_penalty_box = False
 
+        # por qué son 50 preguntas? no se especifica en el código original, pero se asume que es un número suficiente para jugar sin quedarse sin preguntas
         for i in range(50):
             self.pop_questions.append(f"Pop Question {i}")
             self.science_questions.append(f"Science Question {i}")
@@ -63,7 +71,7 @@ class Game:
                 self.is_getting_out_of_penalty_box = False
         else:
             self.places[self.current_player] += roll
-            if self.places[self.current_player] > 12:
+            if self.places[self.current_player] > self.BOARD_SIZE:
                 self.places[self.current_player] -= 12
 
             print(f"{self.players[self.current_player]}'s new location is {self.places[self.current_player]}")
@@ -132,4 +140,4 @@ class Game:
         return True
 
     def _did_player_win(self):
-        return not (self.purses[self.current_player] == 6)
+        return not (self.purses[self.current_player] == self.WINNING_COINS) # añadimos la propiedad WINNING_COINS para evitar el número mágico 6
