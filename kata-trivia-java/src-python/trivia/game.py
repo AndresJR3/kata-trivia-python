@@ -1,5 +1,6 @@
 from collections import deque
 # Andrés Jaime Rodríguez - 2024-06
+from trivia.player import Player
 
 # REFACTOR ME
 class Game:
@@ -10,11 +11,16 @@ class Game:
        
     def __init__(self):
 
+        self.players_list = []
         # por qué son 6? y qué significa ganar 6?
         self.players = []
         self.places = [0] * self.BOARD_SIZE  # posición del jugador i
         self.purses = [0] * self.BOARD_SIZE  # monedas del jugador i
         self.in_penalty_box = [False] * self.BOARD_SIZE  # ¿está en penalti el jugador i?
+
+        # agregamos el atributo players_list para almacenar los objetos Player, lo que 
+        # mejora la legibilidad del código y evita el uso de índices 
+        # para acceder a las propiedades de los jugadores
 
         self.pop_questions = deque()
         self.science_questions = deque()
@@ -30,6 +36,14 @@ class Game:
             self.science_questions.append(f"Science Question {i}")
             self.sports_questions.append(f"Sports Question {i}")
             self.rock_questions.append(self.create_rock_question(i))
+    
+    def add(self, player_name):
+        player = Player(player_name)
+        self.players_list.append(player)
+        print(f"{player_name} was added")
+        print(f"They are player number {len(self.players_list)}")
+        return True
+
 
     def create_rock_question(self, index):
         return f"Rock Question {index}"
