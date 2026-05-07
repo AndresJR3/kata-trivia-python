@@ -33,7 +33,7 @@ class Game:
     
     def add(self, player_name):
         player = Player(player_name)
-        player.position = 1  # Initial position as per original
+        player.position = 1  # Initial position as per original -> 0
         self.players_list.append(player)
         print(f"{player_name} was added")
         print(f"They are player number {len(self.players_list)}")
