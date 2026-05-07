@@ -1,6 +1,8 @@
 from collections import deque
 # Andrés Jaime Rodríguez - 2024-06
 from trivia.player import Player
+from trivia.question_deck import QuestionDeck
+
 
 # REFACTOR ME
 class Game:
@@ -10,12 +12,15 @@ class Game:
     QUESTION_PER_CATEGORY = 50
        
     def __init__(self):
+
         self.players_list = []
 
         self.pop_questions = deque()
         self.science_questions = deque()
         self.sports_questions = deque()
         self.rock_questions = deque()
+
+        self.question_deck = QuestionDeck(self.QUESTION_PER_CATEGORY)
 
         self.current_player = 0
         self.is_getting_out_of_penalty_box = False
@@ -136,4 +141,8 @@ class Game:
         print(f"{player.name}'s new location is {player.position}")
         print(f"The category is {self._current_category()}")
         self._ask_question()
- 
+
+    def _ask_question(self):
+        category = self._current_category()
+        print(self.question_deck.next_question(category))
+
